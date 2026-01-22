@@ -10,8 +10,7 @@ const fortunes = [
   "You will debug it in 5 minutes... after 55 minutes of panic.",
   "Your next commit will be clean and meaningful.",
   "A bug will disappear when you add one console.log().",
-  "The documentation you need is actually in the first search result.",
-  "Coffee is the fuel for your next breakthrough.",
+  "The documentation you need is in the first search result.",
   "A senior dev will compliment your variable naming today.",
   "You passed the vibe check. Proceed with confidence. 😎"
 ];
@@ -20,8 +19,6 @@ const jokes = [
   "Why did the developer go broke? Because they used up all their cache.",
   "My code has two moods: works or why-is-this-happening.",
   "I told my program a joke... it just threw an exception.",
-  "Real programmers count from 0.",
-  "!false (It's funny because it's true).",
   "Hardware: The part of a computer that you can kick.",
   "A SQL query walks into a bar, walks up to two tables, and asks, 'Can I join you?'"
 ];
@@ -58,7 +55,7 @@ app.post("/api/smash", (req, res) => {
 app.get("/api/smashes", (req, res) => res.json({ smashes }));
 
 app.get("/api/secret", (req, res) => {
-  if (req.query.code === "411L") return res.json({ message: "🎉 NEON SECRET: Luck +100. Terminal speed x2!" });
+  if (req.query.code === "411L") return res.json({ message: "🎉 NEON SECRET: Luck +100!" });
   res.status(403).json({ message: "Access Denied." });
 });
 

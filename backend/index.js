@@ -1,97 +1,65 @@
-/**
- * VibeCheck API (CPE 411L)
- * * This server:
- * - runs on your computer (localhost)
- * - listens on a port (default: 3000)
- * - responds to browser requests (endpoints) using JSON
- */
-
 const express = require("express");
 const cors = require("cors");
-
 const app = express();
 const PORT = 3000;
 
-// CORS lets your frontend page call your backend API.
 app.use(cors());
-
-// This allows Express to read JSON bodies (used for POST requests).
 app.use(express.json());
 
-// Data pools (random picks). You can customize these.
 const fortunes = [
   "You will debug it in 5 minutes... after 55 minutes of panic.",
   "Your next commit will be clean and meaningful.",
   "A bug will disappear when you add one console.log().",
-  "You passed the vibe check today. 😎",
+  "The documentation you need is actually in the first search result.",
+  "Coffee is the fuel for your next breakthrough.",
+  "A senior dev will compliment your variable naming today.",
+  "You passed the vibe check. Proceed with confidence. 😎"
 ];
 
 const jokes = [
   "Why did the developer go broke? Because they used up all their cache.",
   "My code has two moods: works or why-is-this-happening.",
   "I told my program a joke... it just threw an exception.",
+  "Real programmers count from 0.",
+  "!false (It's funny because it's true).",
+  "Hardware: The part of a computer that you can kick.",
+  "A SQL query walks into a bar, walks up to two tables, and asks, 'Can I join you?'"
 ];
 
 const vibeMap = {
-  happy: { emoji: "😄", message: "Keep going - you're shipping greatness!" },
-  tired: { emoji: "🥱", message: "Hydrate. Stretch. Then commit." },
-  stressed: { emoji: "😵‍💫", message: "Breathe. One bug at a time." },
+  happy: { emoji: "🚀", message: "Momentum is high! Ship it now!" },
+  tired: { emoji: "🔋", message: "Low battery. Take a 15-minute power nap." },
+  stressed: { emoji: "🧘", message: "Breathe. The bug is small, you are big." },
 };
 
-// Smash counter (stored in memory for now)
 let smashes = 0;
 
-// GET /api/fortune -> returns one random fortune
 app.get("/api/fortune", (req, res) => {
   const pick = fortunes[Math.floor(Math.random() * fortunes.length)];
   res.json({ fortune: pick });
 });
 
-// GET /api/joke -> returns one random joke
 app.get("/api/joke", (req, res) => {
   const pick = jokes[Math.floor(Math.random() * jokes.length)];
   res.json({ joke: pick });
 });
 
-// GET /api/vibe?mood=happy|tired|stressed
 app.get("/api/vibe", (req, res) => {
   const mood = (req.query.mood || "").toLowerCase();
-  const vibe = vibeMap[mood];
-
-  if (!vibe) {
-    return res.json({
-      mood: mood || "unknown",
-      emoji: "🤔",
-      message: "Try mood=happy, tired, or stressed.",
-    });
-  }
-
+  const vibe = vibeMap[mood] || { emoji: "🤔", message: "Vibe status unknown." };
   res.json({ mood, ...vibe });
 });
 
-// POST /api/smash -> increases counter and returns the updated value
 app.post("/api/smash", (req, res) => {
   smashes += 1;
   res.json({ smashes });
 });
 
-// GET /api/smashes -> returns current counter
-app.get("/api/smashes", (req, res) => {
-  res.json({ smashes });
-});
+app.get("/api/smashes", (req, res) => res.json({ smashes }));
 
-// GET /api/secret?code=411L -> hidden message if code is correct
 app.get("/api/secret", (req, res) => {
-  const code = req.query.code;
-
-  if (code === "411L") {
-    return res.json({ message: "🎉 Secret unlocked: +10 luck on your next merge!" });
-  }
-
-  res.status(403).json({ message: "Nope 😄 Try code=411L" });
+  if (req.query.code === "411L") return res.json({ message: "🎉 NEON SECRET: Luck +100. Terminal speed x2!" });
+  res.status(403).json({ message: "Access Denied." });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`VibeCheck API running at http://localhost:${PORT}`);
-});
+app.listen(PORT, () => console.log(`Neon API running at http://localhost:${PORT}`));

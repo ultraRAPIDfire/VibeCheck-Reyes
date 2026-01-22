@@ -3,97 +3,55 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>VibeCheck Pro | Neon Edition</title>
+  <title>VibeCheck OS</title>
   <style>
-    :root {
-      --neon-blue: #00f2ff;
-      --bg-dark: #0a0b10;
-      --card-bg: rgba(255, 255, 255, 0.05);
-    }
+    :root { --neon: #00f2ff; --bg: #050505; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: var(--bg-dark);
-      color: white;
-      font-family: 'Segoe UI', Roboto, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
+      background: var(--bg); color: white; height: 100vh; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Segoe UI', sans-serif;
+      background-image: radial-gradient(circle at 50% 50%, #101525 0%, #050505 100%);
     }
-    .container {
-      width: 90%;
-      max-width: 600px;
-      background: var(--card-bg);
-      padding: 2rem;
-      border-radius: 20px;
-      border: 1px solid rgba(0, 242, 255, 0.2);
-      box-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
-      backdrop-filter: blur(10px);
-      text-align: center;
+    .app-container {
+      width: 100vw; height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: space-evenly; padding: 40px;
     }
-    h1 {
-      color: var(--neon-blue);
-      text-transform: uppercase;
-      letter-spacing: 4px;
-      margin-bottom: 1rem;
-      text-shadow: 0 0 10px var(--neon-blue);
+    #display-panel {
+      width: 85%; min-height: 250px; background: rgba(255,255,255,0.03);
+      border: 2px solid var(--neon); box-shadow: 0 0 40px rgba(0, 242, 255, 0.2);
+      border-radius: 20px; display: flex; align-items: center; justify-content: center;
+      padding: 30px; text-align: center;
     }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 10px;
-      margin-bottom: 2rem;
+    .output-text {
+      font-size: 2.8rem; font-weight: bold; text-shadow: 0 0 15px var(--neon);
+      animation: fadeIn 0.5s ease-out;
+    }
+    .controls {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; max-width: 1100px;
     }
     button {
-      background: transparent;
-      border: 1px solid var(--neon-blue);
-      color: var(--neon-blue);
-      padding: 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s;
-      font-weight: bold;
+      background: transparent; border: 2px solid var(--neon); color: var(--neon);
+      padding: 35px 20px; font-size: 1.3rem; font-weight: bold; cursor: pointer;
+      transition: 0.3s; border-radius: 12px; text-transform: uppercase;
     }
-    button:hover {
-      background: var(--neon-blue);
-      color: black;
-      box-shadow: 0 0 20px var(--neon-blue);
-    }
-    #btnSmash {
-      grid-column: span 2;
-      background: white;
-      color: black;
-      border: none;
-    }
-    #out {
-      background: rgba(0, 0, 0, 0.5);
-      padding: 20px;
-      border-radius: 10px;
-      border-left: 4px solid var(--neon-blue);
-      text-align: left;
-      font-family: 'Courier New', monospace;
-      font-size: 0.9rem;
-      overflow-x: auto;
-      min-height: 100px;
-    }
+    button:hover { background: var(--neon); color: black; box-shadow: 0 0 50px var(--neon); transform: translateY(-5px); }
+    #btnSmash { grid-column: span 3; background: white; color: black; border: none; font-size: 2.2rem; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>VibeCheck</h1>
-    <p>Connected to: <span style="color:var(--neon-blue)">http://localhost:3000</span></p>
-    
-    <div class="grid">
-      <button id="btnFortune">🔮 FORTUNE</button>
-      <button id="btnJoke">😂 JOKE</button>
-      <button data-mood="happy" class="btnMood">🚀 HAPPY</button>
-      <button data-mood="tired" class="btnMood">🔋 TIRED</button>
-      <button data-mood="stressed" class="btnMood">🧘 STRESSED</button>
-      <button id="btnSecret">🕵️ SECRET</button>
-      <button id="btnSmash">💥 SMASH THE API</button>
+  <div class="app-container">
+    <div id="display-panel"><div id="out" class="output-text">SYSTEM READY...</div></div>
+    <div class="controls">
+      <button id="btnFortune">🔮 Fortune</button>
+      <button id="btnJoke">😂 Joke</button>
+      <button id="btnSecret">🕵️ Secret</button>
+      <button data-mood="happy" class="btnMood">🚀 Happy</button>
+      <button data-mood="tired" class="btnMood">🔋 Tired</button>
+      <button data-mood="stressed" class="btnMood">🧘 Stressed</button>
+      <button id="btnSmash">💥 SMASH THE SYSTEM</button>
     </div>
-
-    <pre id="out">// Waiting for command...</pre>
   </div>
   <script src="app.js"></script>
 </body>

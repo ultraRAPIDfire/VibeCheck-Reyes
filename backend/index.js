@@ -19,4 +19,29 @@ app.get("/api/joke", (req, res) => {
   res.json({ joke: pick });
 });
 
+let smashes = 0;
+const vibeMap = {
+  happy: { emoji: "😄", message: "Shipping greatness!" },
+  tired: { emoji: "🥱", message: "Hydrate. Stretch. Commit." },
+  stressed: { emoji: "😵‍💫", message: "Breathe. One bug at a time." },
+};
+
+app.get("/api/vibe", (req, res) => {
+  const mood = (req.query.mood || "").toLowerCase();
+  const vibe = vibeMap[mood] || { emoji: "🤔", message: "Try happy/tired/stressed." };
+  res.json({ mood, ...vibe });
+});
+
+app.post("/api/smash", (req, res) => {
+  smashes += 1;
+  res.json({ smashes });
+});
+
+app.get("/api/smashes", (req, res) => res.json({ smashes }));
+
+app.get("/api/secret", (req, res) => {
+  if (req.query.code === "411L") return res.json({ message: "🎉 Secret unlocked!" });
+  res.status(403).json({ message: "Nope 😄" });
+});
+
 app.listen(PORT, () => console.log(`Server: http://localhost:${PORT}`));
